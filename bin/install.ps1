@@ -62,7 +62,7 @@ schtasks.exe /run /tn "SpamAssassin AutoUpdate"
 Start-Sleep -Seconds 30
 
 # Download the SpamAssassin config file
-Invoke-WebRequest https://raw.githubusercontent.com/jmdevince/SpamassassinAgent/master/contrib/spamassassin/local.cf -OutFile "C:\Program Files (x86)\SpamAssassin\etc\spamassassin\local.cf"
+Invoke-WebRequest https://raw.githubusercontent.com/shubell/SpamassassinAgent/master/contrib/spamassassin/local.cf -OutFile "C:\Program Files (x86)\SpamAssassin\etc\spamassassin\local.cf"
 
 # Start the spamd service
 Start-Service spamd
@@ -71,18 +71,20 @@ Start-Service spamd
 $Version = ""
 
 [int]$xMenuChoiceA = 0
-while ( $xMenuChoiceA -lt 1 -or $xMenuChoiceA -gt 4 ){
+while ( $xMenuChoiceA -lt 1 -or $xMenuChoiceA -gt 5 ){
 Write-Host "Please select the version of Microsoft Exchange Server you are using..."
 Write-host "1. 2016 Service Pack 0"
 Write-host "2. 2013 Service Pack 1"
 Write-host "3. 2010 Service pack 3"
 Write-host "4. 2010 Service Pack 2"
-[Int]$xMenuChoiceA = read-host "Please enter an option 1 to 4..." }
+Write-host "5. 2016 15.1.2507.6"
+[Int]$xMenuChoiceA = read-host "Please enter an option 1 to 5..." }
 Switch( $xMenuChoiceA ){
   1{$version = "2016SP0"}
   2{$version = "2013SP1"}
   3{$version = "2010SP3"}
   4{$version = "2010SP2"}
+  5{$version = "15.1.2507.6"}
 default{Write-Host "Invalid Selection"}
 }
 
@@ -93,10 +95,10 @@ New-Item "C:\CustomAgents\" -type Directory
 New-Item "C:\CustomAgents\SpamassassinAgentData" -type Directory
 
 # Download the proper DLL
-Invoke-WebRequest https://raw.githubusercontent.com/jmdevince/SpamassassinAgent/master/bin/$version/SpamassassinAgent.dll -OutFile "C:\CustomAgents\SpamassassinAgent.dll"
+Invoke-WebRequest https://raw.githubusercontent.com/shubell/SpamassassinAgent/master/bin/$version/SpamassassinAgent.dll -OutFile "C:\CustomAgents\SpamassassinAgent.dll"
 
 # Download the XML configuration
-Invoke-WebRequest https://raw.githubusercontent.com/jmdevince/SpamassassinAgent/master/etc/SpamassassinConfig.xml -OutFile "C:\CustomAgents\SpamassassinAgentData\SpamassassinConfig.xml"
+Invoke-WebRequest https://raw.githubusercontent.com/shubell/SpamassassinAgent/master/etc/SpamassassinConfig.xml -OutFile "C:\CustomAgents\SpamassassinAgentData\SpamassassinConfig.xml"
 
 # Connect to the exchange Server
 . 'C:\Program Files\Microsoft\Exchange Server\V15\bin\RemoteExchange.ps1'
@@ -108,13 +110,13 @@ Enable-TransportAgent "Spamassassin Agent"
 Set-TransportAgent "Spamassassin Agent" -Priority 3
 
 # Install Anti-Spam Functionality
-. 'C:\Program Files\Microsoft\Exchange Server\V15\Scripts\Install-AntiSpamAgents.ps1'
+#. 'C:\Program Files\Microsoft\Exchange Server\V15\Scripts\Install-AntiSpamAgents.ps1'
 
 # Disable Existing Anti-Spam Functionality
-Set-ContentFilterConfig -Enable $false
-Set-SenderFilterConfig -Enable $false
-Set-SenderIDConfig -Enable $false
-Set-SenderReputationConfig -Enable $false
+#Set-ContentFilterConfig -Enable $false
+#Set-SenderFilterConfig -Enable $false
+#Set-SenderIDConfig -Enable $false
+#Set-SenderReputationConfig -Enable $false
 
 # Restart 
 Restart-Service MSExchangeTransport
