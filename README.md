@@ -27,7 +27,8 @@ Use the install script, if it fails do it manually what it does in the script ;)
 Add a mail flow rule in your exchange server that if a 'X-Spam-Discard' header includes 'YES' set the SCL level to in my case 6.
 This rule will mark emails that were detected by spamassasin as spam so that they are going into the spam folder.
 
-Contact
+
+The Original authors Contact
 -----
 - James DeVincentis
 - james@hexhost.net
