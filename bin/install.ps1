@@ -45,10 +45,21 @@ foreach($item in $zip.items())
     $shell.Namespace("C:\Program Files (x86)\SpamAssassin\").copyhere($item)
 }
 
+# Downloading srvany-ng
+
+Invoke-WebRequest https://github.com/birkett/srvany-ng/releases/download/v1.0.0.0/srvany-ng_26-03-2015.zip -OutFile C:\Windows\Temp\srvany-ng.zip
+
+# Unzip
+Expand-Archive -LiteralPath C:\Windows\Temp\srvany-ng.zip -DestinationPath C:\Windows\Temp\srvany-ng
+
+# Copy to system folder
+
+Copy-Item "C:\Windows\Temp\srvany-ng\x86\srvany-ng.exe" -Destination "C:\Windows\System32\"
+
 #TODO: Get latest version of default configs from the github repo
 
 # Create the service
-New-Service -BinaryPathName "C:\Windows\System32\srvany.exe" -Name spamd -DisplayName "SpamAssassin Daemon" 
+New-Service -BinaryPathName "C:\Windows\System32\srvany-ng.exe" -Name spamd -DisplayName "SpamAssassin Daemon" 
 New-Item -Path HKLM:\SYSTEM\CurrentControlSet\services\spamd -Name "Parameters"
 New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\services\spamd\Parameters -Name "Application" -PropertyType STRING -Value "C:\Program Files (x86)\SpamAssassin\spamd.exe"
 New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\services\spamd\Parameters -Name "AppDirectory" -PropertyType STRING -Value "C:\Program Files (x86)\SpamAssassin\"
