@@ -3,6 +3,7 @@ Spamassassin Agent for Microsoft Exchange Server
 
 > To work correctly you must build the solution with references to 
 > the correct Microsoft Exchange DLLs.
+> There are some precompiled version that must match yours
 
 This transport Agent Interfaces Microsoft Exchange directly to SpamAssassin.
 
@@ -20,8 +21,11 @@ Features
 
 Install Instructions:
 -----
-https://kill-9.me/557/exchange-spamassassin-transport-agent
+Use the install script, if it fails do it manually what it does in the script ;)
+>  dead link https://kill-9.me/557/exchange-spamassassin-transport-agent
 
+Add a mail flow rule in your exchange server that if a 'X-Spam-Discard' header includes 'YES' set the SCL level to in my case 6.
+This rule will mark emails that were detected by spamassasin as spam so that they are going into the spam folder.
 
 Contact
 -----
