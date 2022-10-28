@@ -21,8 +21,9 @@ Features
 
 Install Instructions:
 -----
-Use the install script, if it fails do it manually what it does in the script ;)
 >  dead link https://kill-9.me/557/exchange-spamassassin-transport-agent
+
+Use the install script, if it fails do it manually what it does in the script ;)
 
 Add a mail flow rule in your exchange server that if a 'X-Spam-Discard' header includes 'YES' set the SCL level to in my case 6.
 This rule will mark emails that were detected by spamassasin as spam so that they are going into the spam folder.
