@@ -6,6 +6,8 @@
 # Only a small subset of options are listed below
 #
 ###########################################################################
+add_header all Score _SCORE_
+remove_header all Level
 
 #   Add *****SPAM***** to the Subject header of spam e-mails
 #
