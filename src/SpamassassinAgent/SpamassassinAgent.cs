@@ -252,7 +252,7 @@
                     Byte[] scoreBytes = outBytes.GetRange(scoreStart, scoreEnd - scoreStart).ToArray();
                     try
                     {
-                        score = Double.Parse(new String(scoreBytes.Select(b => (Char)b).ToArray()).Trim());
+                        score = Double.Parse(new String(scoreBytes.Select(b => (Char)b).ToArray()).Trim(), CultureInfo.InvariantCulture);
                     }
                     catch(Exception e)
                     {
