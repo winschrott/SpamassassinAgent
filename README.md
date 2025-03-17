@@ -7,6 +7,7 @@ Spamassassin runs in two parts, the daemon (spamd) and the client (spamc). This 
 if the score is above the discard threshold the agent will tag the message with X-Spam-Discard: YES. Then the Exchange Server can take action based on this header. 
 
 Forked to use basic MS-DLLs not to have a new compiled version for any upcoming SU / SR.
+Should work with all 15.*-Versions.
 
 Features
 -----
