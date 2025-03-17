@@ -39,7 +39,7 @@ New-Item "C:\Program Files\SpamAssassin\" -type Directory
 
 # Unzip
 $shell = new-object -com shell.application
-$zip = $shell.NameSpace(“C:\Windows\Temp\SpamAssassinForWindows-x64.zip”)
+$zip = $shell.NameSpace("C:\Windows\Temp\SpamAssassinForWindows-x64.zip")
 foreach($item in $zip.items())
 {
     $shell.Namespace("C:\Program Files\SpamAssassin\").copyhere($item)
