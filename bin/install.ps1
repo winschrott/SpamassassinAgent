@@ -61,8 +61,8 @@ Copy-Item "C:\Windows\Temp\srvany-ng\x64\srvany-ng.exe" -Destination "C:\Windows
 # Create the service
 New-Service -BinaryPathName "C:\Windows\System32\srvany-ng.exe" -Name spamd -DisplayName "SpamAssassin Daemon" 
 New-Item -Path HKLM:\SYSTEM\CurrentControlSet\services\spamd -Name "Parameters"
-New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\services\spamd\Parameters -Name "Application" -PropertyType STRING -Value "C:\Program Files (x86)\SpamAssassin\spamd.exe"
-New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\services\spamd\Parameters -Name "AppDirectory" -PropertyType STRING -Value "C:\Program Files (x86)\SpamAssassin\"
+New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\services\spamd\Parameters -Name "Application" -PropertyType STRING -Value "C:\Program Files\SpamAssassin\spamd.exe"
+New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\services\spamd\Parameters -Name "AppDirectory" -PropertyType STRING -Value "C:\Program Files\SpamAssassin\"
 New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\services\spamd\Parameters -Name "AppParameters" -PropertyType STRING -Value "-x -l -s spamd.log"
 
 # Create the system task to run the update script every night
