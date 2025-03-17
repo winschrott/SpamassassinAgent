@@ -22,7 +22,7 @@ Are you sure you want to proceed?"
             $service.delete()
         }
 
-        Remove-Item -Recurse -Force "C:\Program Files (x86)\SpamAssassin\"
+        Remove-Item -Recurse -Force "C:\Program Files\SpamAssassin\"
 
         schtasks.exe /delete /tn "SpamAssassin AutoUpdate" /F
 
@@ -94,7 +94,7 @@ Invoke-Webrequest https://raw.githubusercontent.com/winschrott/SpamassassinAgent
 Invoke-Webrequest https://raw.githubusercontent.com/winschrott/SpamassassinAgent/master/bin/Microsoft.Exchange.Data.Transport.xml -OutFile "C:\CustomAgents\Microsoft.Exchange.Data.Transport.xml"
 
 # Download the XML configuration
-Invoke-WebRequest https://raw.githubusercontent.com/shubell/SpamassassinAgent/master/etc/SpamassassinConfig.xml -OutFile "C:\CustomAgents\SpamassassinAgentData\SpamassassinConfig.xml"
+Invoke-WebRequest https://raw.githubusercontent.com/winschrott/SpamassassinAgent/master/etc/SpamassassinConfig.xml -OutFile "C:\CustomAgents\SpamassassinAgentData\SpamassassinConfig.xml"
 
 # Connect to the exchange Server
 . 'C:\Program Files\Microsoft\Exchange Server\V15\bin\RemoteExchange.ps1'
