@@ -22,7 +22,7 @@ Features
 
 Install Instructions:
 -----
-Use the install script, if it fails do it manually what it does in the script ;)
+Install script is not moidifed yet. Please install manually by using the binaries in the src-folder.
 
 Add a mail flow rule in your exchange server that if a 'X-Spam-Discard' header includes 'YES' set the SCL level to in my case 6.
 This rule will mark emails that were detected by spamassasin as spam so that they are going into the spam folder.
