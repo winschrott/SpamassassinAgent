@@ -1,0 +1,11 @@
+C:\Temp\SpamassassinAgent-master\src\SpamassassinAgent\bin\Debug\SpamassassinAgent.dll
+C:\Temp\SpamassassinAgent-master\src\SpamassassinAgent\bin\Debug\SpamassassinAgent.pdb
+C:\Temp\SpamassassinAgent-master\src\SpamassassinAgent\bin\Debug\Microsoft.Exchange.Data.Common.dll
+C:\Temp\SpamassassinAgent-master\src\SpamassassinAgent\bin\Debug\Microsoft.Exchange.Data.Transport.dll
+C:\Temp\SpamassassinAgent-master\src\SpamassassinAgent\bin\Debug\Microsoft.Exchange.Data.Common.xml
+C:\Temp\SpamassassinAgent-master\src\SpamassassinAgent\bin\Debug\Microsoft.Exchange.Data.Transport.xml
+C:\Temp\SpamassassinAgent-master\src\SpamassassinAgent\obj\Debug\SpamassassinAgent.csproj.AssemblyReference.cache
+C:\Temp\SpamassassinAgent-master\src\SpamassassinAgent\obj\Debug\SpamassassinAgent.csproj.CoreCompileInputs.cache
+C:\Temp\SpamassassinAgent-master\src\SpamassassinAgent\obj\Debug\Spamassa.399C0A2A.Up2Date
+C:\Temp\SpamassassinAgent-master\src\SpamassassinAgent\obj\Debug\SpamassassinAgent.dll
+C:\Temp\SpamassassinAgent-master\src\SpamassassinAgent\obj\Debug\SpamassassinAgent.pdb
