@@ -6,11 +6,15 @@ This transport Agent Interfaces Microsoft Exchange directly to SpamAssassin.
 Spamassassin runs in two parts, the daemon (spamd) and the client (spamc). This plugin will take a message, feed it to the Spamassassin client. The spamassassin client will then connect to the Spamassassin Server and run the spamassassin scoring software on the message. Once the message is returned, the agent will then attempt to find the score
 if the score is above the discard threshold the agent will tag the message with X-Spam-Discard: YES. Then the Exchange Server can take action based on this header. 
 
-Forked to use basic MS-DLLs not to have a new compiled version for any upcoming SU / SR.
+Forked to use basic MS-DLLs not to have a new compiled version for any upcoming SU / SR, usage of x64-version of Spamassassin for Windows by Jam Software.
 Should work with all 15.*-Versions.
 
 Note:
 Project is in progress.
+Till now install script is:
+- downloading needed files
+- creating service spamd
+- creating update task
 
 Features
 -----
