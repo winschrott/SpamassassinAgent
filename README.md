@@ -9,6 +9,9 @@ if the score is above the discard threshold the agent will tag the message with 
 Forked to use basic MS-DLLs not to have a new compiled version for any upcoming SU / SR.
 Should work with all 15.*-Versions.
 
+Note:
+Project is in progress.
+
 Features
 -----
 1. Configurable Max Message size. This avoids memory issues when scanning very large messages
