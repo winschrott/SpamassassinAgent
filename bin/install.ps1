@@ -1,6 +1,6 @@
 
 # Check and see if already installed
-if((Test-Path -Path "C:\Program Files (x86)\SpamAssassin\" )){
+if((Test-Path -Path "C:\Program Files\SpamAssassin\" )){
     $message  = 'Warning'
     $question = "A SpamAssassin installation has been detected already. If you continue all files (including settings) will be overwritten.
     
@@ -32,17 +32,17 @@ Are you sure you want to proceed?"
 }
 
 # Download
-Invoke-WebRequest http://www.jam-software.com/spamassassin/SpamAssassinForWindows-x86.zip -OutFile C:\Windows\Temp\SpamAssassinForWindows.zip
+Invoke-WebRequest https://downloads.jam-software.de/spamassassin/SpamAssassinForWindows-x64.zip -OutFile C:\Windows\Temp\SpamAssassinForWindows-x64.zip
 
 # Create directory if it doesn't exist
-New-Item "C:\Program Files (x86)\SpamAssassin\" -type Directory
+New-Item "C:\Program Files\SpamAssassin\" -type Directory
 
 # Unzip
 $shell = new-object -com shell.application
-$zip = $shell.NameSpace(“C:\Windows\Temp\SpamAssassinForWindows.zip”)
+$zip = $shell.NameSpace(“C:\Windows\Temp\SpamAssassinForWindows-x64.zip”)
 foreach($item in $zip.items())
 {
-    $shell.Namespace("C:\Program Files (x86)\SpamAssassin\").copyhere($item)
+    $shell.Namespace("C:\Program Files\SpamAssassin\").copyhere($item)
 }
 
 # Downloading srvany-ng
@@ -66,38 +66,19 @@ New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\services\spamd\Parameters 
 New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\services\spamd\Parameters -Name "AppParameters" -PropertyType STRING -Value "-x -l -s spamd.log"
 
 # Create the system task to run the update script every night
-schtasks.exe /create /tn "SpamAssassin AutoUpdate" /tr "'C:\Program Files (x86)\SpamAssassin\sa-update.bat'" /sc DAILY /st 02:00 /RU SYSTEM /RL HIGHEST /v1
+schtasks.exe /create /tn "SpamAssassin AutoUpdate" /tr "'C:\Program Files\SpamAssassin\sa-update.bat'" /sc DAILY /st 02:00 /RU SYSTEM /RL HIGHEST /v1
 schtasks.exe /run /tn "SpamAssassin AutoUpdate"
 
 # wait about 30 seconds for the update to complete
 Start-Sleep -Seconds 30
 
 # Download the SpamAssassin config file
-Invoke-WebRequest https://raw.githubusercontent.com/shubell/SpamassassinAgent/master/contrib/spamassassin/local.cf -OutFile "C:\Program Files (x86)\SpamAssassin\etc\spamassassin\local.cf"
+Invoke-WebRequest https://raw.githubusercontent.com/winschrott/SpamassassinAgent/master/contrib/spamassassin/local.cf -OutFile "C:\Program Files\SpamAssassin\etc\spamassassin\local.cf"
 
 # Start the spamd service
 Start-Service spamd
 
-# Now let's download and install Spamassasssin Transport Agent, Ask what version of exchange they are using
-$Version = ""
-
-[int]$xMenuChoiceA = 0
-while ( $xMenuChoiceA -lt 1 -or $xMenuChoiceA -gt 5 ){
-Write-Host "Please select the version of Microsoft Exchange Server you are using..."
-Write-host "1. 2016 Service Pack 0"
-Write-host "2. 2013 Service Pack 1"
-Write-host "3. 2010 Service pack 3"
-Write-host "4. 2010 Service Pack 2"
-Write-host "5. 2016 15.1.2507.6"
-[Int]$xMenuChoiceA = read-host "Please enter an option 1 to 5..." }
-Switch( $xMenuChoiceA ){
-  1{$version = "2016SP0"}
-  2{$version = "2013SP1"}
-  3{$version = "2010SP3"}
-  4{$version = "2010SP2"}
-  5{$version = "15.1.2507.6"}
-default{Write-Host "Invalid Selection"}
-}
+# Now let's download and install Spamassasssin Transport Agent
 
 # Create Directory to save to
 New-Item "C:\CustomAgents\" -type Directory
@@ -106,7 +87,11 @@ New-Item "C:\CustomAgents\" -type Directory
 New-Item "C:\CustomAgents\SpamassassinAgentData" -type Directory
 
 # Download the proper DLL
-Invoke-WebRequest https://raw.githubusercontent.com/shubell/SpamassassinAgent/master/bin/$version/SpamassassinAgent.dll -OutFile "C:\CustomAgents\SpamassassinAgent.dll"
+Invoke-WebRequest https://raw.githubusercontent.com/winschrott/SpamassassinAgent/master/bin/SpamassassinAgent.dll -OutFile "C:\CustomAgents\SpamassassinAgent.dll"
+Invoke-WebRequest https://raw.githubusercontent.com/winschrott/SpamassassinAgent/master/bin/Microsoft.Exchange.Data.Common.dll -OutFile "C:\CustomAgents\Microsoft.Exchange.Data.Common.dll"
+Invoke-WebRequest https://raw.githubusercontent.com/winschrott/SpamassassinAgent/master/bin/Microsoft.Exchange.Data.Common.xml -OutFile "C:\CustomAgents\Microsoft.Exchange.Data.Common.xml"
+Invoke-Webrequest https://raw.githubusercontent.com/winschrott/SpamassassinAgent/master/bin/Microsoft.Exchange.Data.Transport.dll -OutFile "C:\CustomAgents\Microsoft.Exchange.Data.Transport.dll"
+Invoke-Webrequest https://raw.githubusercontent.com/winschrott/SpamassassinAgent/master/bin/Microsoft.Exchange.Data.Transport.xml -OutFile "C:\CustomAgents\Microsoft.Exchange.Data.Transport.xml"
 
 # Download the XML configuration
 Invoke-WebRequest https://raw.githubusercontent.com/shubell/SpamassassinAgent/master/etc/SpamassassinConfig.xml -OutFile "C:\CustomAgents\SpamassassinAgentData\SpamassassinConfig.xml"
