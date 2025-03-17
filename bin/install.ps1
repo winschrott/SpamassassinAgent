@@ -54,7 +54,7 @@ Expand-Archive -LiteralPath C:\Windows\Temp\srvany-ng.zip -DestinationPath C:\Wi
 
 # Copy to system folder
 
-Copy-Item "C:\Windows\Temp\srvany-ng\x86\srvany-ng.exe" -Destination "C:\Windows\System32\"
+Copy-Item "C:\Windows\Temp\srvany-ng\x64\srvany-ng.exe" -Destination "C:\Windows\System32\"
 
 #TODO: Get latest version of default configs from the github repo
 
