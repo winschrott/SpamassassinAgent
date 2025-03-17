@@ -23,11 +23,11 @@ Use the install script, if it fails do it manually what it does in the script ;)
 Add a mail flow rule in your exchange server that if a 'X-Spam-Discard' header includes 'YES' set the SCL level to in my case 6.
 This rule will mark emails that were detected by spamassasin as spam so that they are going into the spam folder.
 
-The Spamassasing agent config is located here
+The Spamassassin agent config is located here
 C:\CustomAgents\SpamAssassinAgentData\SpamassasingConfig.xml
 
-The Spamassaing daemon config is located here
-C:\Program Files (x86)\SpamAssassin\etc\spamassassin\local.cf
+The Spamassassin daemon config is located here
+C:\Program Files\SpamAssassin\etc\spamassassin\local.cf
 
 The Original authors Contact
 -----
