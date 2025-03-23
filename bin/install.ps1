@@ -110,8 +110,8 @@ Invoke-WebRequest https://raw.githubusercontent.com/winschrott/SpamassassinAgent
 Connect-ExchangeServer -auto
 
 ## Install the Transport Agent
-#Install-TransportAgent -Name "SpamAssassin Agent" -AssemblyPath C:\CustomAgents\SpamassassinAgent.dll -TransportAgentFactory SpamassassinAgent.SpamassassinAgentFactory
-#Enable-TransportAgent "Spamassassin Agent"
+Install-TransportAgent -Name "SpamAssassin Agent" -AssemblyPath ($customagentpath + "SpamassassinAgent.dll") -TransportAgentFactory SpamassassinAgent.SpamassassinAgentFactory
+Enable-TransportAgent "Spamassassin Agent"
 ##Set-TransportAgent "Spamassassin Agent" -Priority 3
 
 ## Install Anti-Spam Functionality
