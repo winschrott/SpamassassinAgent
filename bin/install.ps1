@@ -66,7 +66,7 @@ New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\services\spamd\Parameters 
 New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\services\spamd\Parameters -Name "AppParameters" -PropertyType STRING -Value "-x -l -s spamd.log"
 
 # Create the system task to run the update script every night
-schtasks.exe /create /tn "SpamAssassin AutoUpdate" /tr "'($env:windir + "\SpamAssassin\sa-update.bat")'" /sc DAILY /st 02:00 /RU SYSTEM /RL HIGHEST /v1
+schtasks.exe /create /tn "SpamAssassin AutoUpdate" /tr ($env:windir + "\SpamAssassin\sa-update.bat") /sc DAILY /st 02:00 /RU SYSTEM /RL HIGHEST /v1
 schtasks.exe /run /tn "SpamAssassin AutoUpdate"
 
 # wait about 30 seconds for the update to complete
