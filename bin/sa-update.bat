@@ -1,0 +1,1 @@
+sa-update.exe --nogpg
