@@ -56,6 +56,9 @@ Expand-Archive -LiteralPath ($env:windir + "\Temp\srvany-ng.zip") -DestinationPa
 
 Copy-Item ($env:windir + "\Temp\srvany-ng\x64\srvany-ng.exe") -Destination ($env:windir + "\System32\")
 
+# get Update Batch
+Invoke-Webrequest https://raw.githubusercontent.com/winschrott/SpamAssassinAgent/master/bin/sa-update.bat -OutFile ($env:ProgramFiles + "\SpamAssassin\sa-update.bat")
+
 #TODO: Get latest version of default configs from the github repo
 
 # Create the service
@@ -66,7 +69,7 @@ New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\services\spamd\Parameters 
 New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\services\spamd\Parameters -Name "AppParameters" -PropertyType STRING -Value "-x -l -s spamd.log"
 
 # Create the system task to run the update script every night
-schtasks.exe /create /tn "SpamAssassin AutoUpdate" /tr ('"' + $env:ProgramFiles + "\SpamAssassin\sa-update.exe" + '"' --nogpg") /sc DAILY /st 02:00 /RU SYSTEM /RL HIGHEST /v1
+schtasks.exe /create /tn "SpamAssassin AutoUpdate" /tr ('"%programfiles%"' + "\SpamAssassin\sa-update.bat"") /sc DAILY /st 02:00 /RU SYSTEM /RL HIGHEST /v1
 schtasks.exe /run /tn "SpamAssassin AutoUpdate"
 
 # wait about 30 seconds for the update to complete
