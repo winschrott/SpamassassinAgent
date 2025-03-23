@@ -1,6 +1,6 @@
 
 # Check and see if already installed
-if((Test-Path -Path "C:\Program Files\SpamAssassin\" )){
+if((Test-Path -Path ($env:ProgramFiles + "\SpamAssassin\") )){
     $message  = 'Warning'
     $question = "A SpamAssassin installation has been detected already. If you continue all files (including settings) will be overwritten.
     
@@ -22,7 +22,7 @@ Are you sure you want to proceed?"
             $service.delete()
         }
 
-        Remove-Item -Recurse -Force "C:\Program Files\SpamAssassin\"
+        Remove-Item -Recurse -Force ($env:ProgramFiles + "\SpamAssassin\")
 
         schtasks.exe /delete /tn "SpamAssassin AutoUpdate" /F
 
@@ -32,48 +32,48 @@ Are you sure you want to proceed?"
 }
 
 # Download
-Invoke-WebRequest https://downloads.jam-software.de/spamassassin/SpamAssassinForWindows-x64.zip -OutFile C:\Windows\Temp\SpamAssassinForWindows-x64.zip
+Invoke-WebRequest https://downloads.jam-software.de/spamassassin/SpamAssassinForWindows-x64.zip -OutFile ($env:windir + "\Temp\SpamAssassinForWindows-x64.zip")
 
 # Create directory if it doesn't exist
-New-Item "C:\Program Files\SpamAssassin\" -type Directory
+New-Item ($env:ProgramFiles + "\SpamAssassin\") -type Directory
 
 # Unzip
 $shell = new-object -com shell.application
-$zip = $shell.NameSpace("C:\Windows\Temp\SpamAssassinForWindows-x64.zip")
+$zip = $shell.NameSpace($env:windir + "\Temp\SpamAssassinForWindows-x64.zip")
 foreach($item in $zip.items())
 {
-    $shell.Namespace("C:\Program Files\SpamAssassin\").copyhere($item)
+    $shell.Namespace($env:ProgramFiles + "\SpamAssassin\").copyhere($item)
 }
 
 # Downloading srvany-ng
 
-Invoke-WebRequest https://github.com/birkett/srvany-ng/releases/download/v1.0.0.0/srvany-ng_26-03-2015.zip -OutFile C:\Windows\Temp\srvany-ng.zip
+Invoke-WebRequest https://github.com/birkett/srvany-ng/releases/download/v1.0.0.0/srvany-ng_26-03-2015.zip -OutFile ($env:windir + "\Temp\srvany-ng.zip")
 
 # Unzip
-Expand-Archive -LiteralPath C:\Windows\Temp\srvany-ng.zip -DestinationPath C:\Windows\Temp\srvany-ng
+Expand-Archive -LiteralPath ($env:windir + "\Temp\srvany-ng.zip") -DestinationPath ($env:windir + "\Temp\srvany-ng")
 
 # Copy to system folder
 
-Copy-Item "C:\Windows\Temp\srvany-ng\x64\srvany-ng.exe" -Destination "C:\Windows\System32\"
+Copy-Item ($env:windir + "\Temp\srvany-ng\x64\srvany-ng.exe") -Destination ($env:windir + "\System32\")
 
 #TODO: Get latest version of default configs from the github repo
 
 # Create the service
-New-Service -BinaryPathName "C:\Windows\System32\srvany-ng.exe" -Name spamd -DisplayName "SpamAssassin Daemon" 
+New-Service -BinaryPathName ($env:windir + "\System32\srvany-ng.exe") -Name spamd -DisplayName "SpamAssassin Daemon" 
 New-Item -Path HKLM:\SYSTEM\CurrentControlSet\services\spamd -Name "Parameters"
-New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\services\spamd\Parameters -Name "Application" -PropertyType STRING -Value "C:\Program Files\SpamAssassin\spamd.exe"
-New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\services\spamd\Parameters -Name "AppDirectory" -PropertyType STRING -Value "C:\Program Files\SpamAssassin\"
+New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\services\spamd\Parameters -Name "Application" -PropertyType STRING -Value ($env:ProgramFiles + "\SpamAssassin\spamd.exe")
+New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\services\spamd\Parameters -Name "AppDirectory" -PropertyType STRING -Value ($env:ProgramFiles + "\SpamAssassin\")
 New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\services\spamd\Parameters -Name "AppParameters" -PropertyType STRING -Value "-x -l -s spamd.log"
 
 # Create the system task to run the update script every night
-schtasks.exe /create /tn "SpamAssassin AutoUpdate" /tr "'C:\Program Files\SpamAssassin\sa-update.bat'" /sc DAILY /st 02:00 /RU SYSTEM /RL HIGHEST /v1
+schtasks.exe /create /tn "SpamAssassin AutoUpdate" /tr "'($env:windir + "\SpamAssassin\sa-update.bat")'" /sc DAILY /st 02:00 /RU SYSTEM /RL HIGHEST /v1
 schtasks.exe /run /tn "SpamAssassin AutoUpdate"
 
 # wait about 30 seconds for the update to complete
 Start-Sleep -Seconds 30
 
 # Download the SpamAssassin config file
-Invoke-WebRequest https://raw.githubusercontent.com/winschrott/SpamassassinAgent/master/contrib/spamassassin/local.cf -OutFile "C:\Program Files\SpamAssassin\etc\spamassassin\local.cf"
+Invoke-WebRequest https://raw.githubusercontent.com/winschrott/SpamassassinAgent/master/contrib/spamassassin/local.cf -OutFile ($env:windir + "\SpamAssassin\etc\spamassassin\local.cf")
 
 # Start the spamd service
 Start-Service spamd
