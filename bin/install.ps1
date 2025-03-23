@@ -80,7 +80,7 @@ Start-Service spamd
 
 # Now let's download and install Spamassasssin Transport Agent
 
-$customagentpath = $env:ExchangeInstallPath + "Customagents"
+$customagentpath = $env:ExchangeInstallPath + "CustomAgents\"
 
 # Create Directory to save to
 if (!(Test-Path $customagentpath)){
