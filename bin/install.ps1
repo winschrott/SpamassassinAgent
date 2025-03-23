@@ -80,25 +80,27 @@ Start-Service spamd
 
 # Now let's download and install Spamassasssin Transport Agent
 
+$customagentpath = $env:ExchangeInstallPath + "Customagents"
+
 # Create Directory to save to
-if (!(Test-Path "C:\Customagents")){
-  New-Item "C:\CustomAgents\" -type Directory
+if (!(Test-Path $customagentpath)){
+  New-Item $customagentpath -type Directory
 }
 
 # Create Data Directory
-if (!(Test-Path "C:\CustomAgents\SpamassassinAgentData")){
-  New-Item "C:\CustomAgents\SpamassassinAgentData" -type Directory
+if (!(Test-Path ($customagentpath + "SpamassassinAgentData"))){
+  New-Item ($customagentpath + "SpamassassinAgentData") -type Directory
 }
 
 # Download the proper DLL
-Invoke-WebRequest https://raw.githubusercontent.com/winschrott/SpamassassinAgent/master/bin/SpamassassinAgent.dll -OutFile "C:\CustomAgents\SpamassassinAgent.dll"
-Invoke-WebRequest https://raw.githubusercontent.com/winschrott/SpamassassinAgent/master/bin/Microsoft.Exchange.Data.Common.dll -OutFile "C:\CustomAgents\Microsoft.Exchange.Data.Common.dll"
-Invoke-WebRequest https://raw.githubusercontent.com/winschrott/SpamassassinAgent/master/bin/Microsoft.Exchange.Data.Common.xml -OutFile "C:\CustomAgents\Microsoft.Exchange.Data.Common.xml"
-Invoke-Webrequest https://raw.githubusercontent.com/winschrott/SpamassassinAgent/master/bin/Microsoft.Exchange.Data.Transport.dll -OutFile "C:\CustomAgents\Microsoft.Exchange.Data.Transport.dll"
-Invoke-Webrequest https://raw.githubusercontent.com/winschrott/SpamassassinAgent/master/bin/Microsoft.Exchange.Data.Transport.xml -OutFile "C:\CustomAgents\Microsoft.Exchange.Data.Transport.xml"
+Invoke-WebRequest https://raw.githubusercontent.com/winschrott/SpamassassinAgent/master/bin/SpamassassinAgent.dll -OutFile ($customagentpath + "SpamassassinAgent.dll")
+Invoke-WebRequest https://raw.githubusercontent.com/winschrott/SpamassassinAgent/master/bin/Microsoft.Exchange.Data.Common.dll -OutFile ($customagentpath + "Microsoft.Exchange.Data.Common.dll")
+Invoke-WebRequest https://raw.githubusercontent.com/winschrott/SpamassassinAgent/master/bin/Microsoft.Exchange.Data.Common.xml -OutFile ($customagentpath + "Microsoft.Exchange.Data.Common.xml")
+Invoke-Webrequest https://raw.githubusercontent.com/winschrott/SpamassassinAgent/master/bin/Microsoft.Exchange.Data.Transport.dll -OutFile ($customagentpath + "Microsoft.Exchange.Data.Transport.dll")
+Invoke-Webrequest https://raw.githubusercontent.com/winschrott/SpamassassinAgent/master/bin/Microsoft.Exchange.Data.Transport.xml -OutFile ($customagentpath + "Microsoft.Exchange.Data.Transport.xml")
 
 # Download the XML configuration
-Invoke-WebRequest https://raw.githubusercontent.com/winschrott/SpamassassinAgent/master/etc/SpamassassinConfig.xml -OutFile "C:\CustomAgents\SpamassassinAgentData\SpamassassinConfig.xml"
+Invoke-WebRequest https://raw.githubusercontent.com/winschrott/SpamassassinAgent/master/etc/SpamassassinConfig.xml -OutFile ($customagentpath + "SpamassassinAgentData\SpamassassinConfig.xml")
 
 ## Connect to the exchange Server
 #. 'C:\Program Files\Microsoft\Exchange Server\V15\bin\RemoteExchange.ps1'
