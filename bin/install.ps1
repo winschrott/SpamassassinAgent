@@ -106,8 +106,8 @@ Invoke-Webrequest https://raw.githubusercontent.com/winschrott/SpamassassinAgent
 Invoke-WebRequest https://raw.githubusercontent.com/winschrott/SpamassassinAgent/master/etc/SpamassassinConfig.xml -OutFile ($customagentpath + "SpamassassinAgentData\SpamassassinConfig.xml")
 
 ## Connect to the exchange Server
-#. 'C:\Program Files\Microsoft\Exchange Server\V15\bin\RemoteExchange.ps1'
-#Connect-ExchangeServer -auto
+. $env:ExchangeInstallPath\bin\RemoteExchange.ps1'
+Connect-ExchangeServer -auto
 
 ## Install the Transport Agent
 #Install-TransportAgent -Name "SpamAssassin Agent" -AssemblyPath C:\CustomAgents\SpamassassinAgent.dll -TransportAgentFactory SpamassassinAgent.SpamassassinAgentFactory
