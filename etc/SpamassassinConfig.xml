@@ -1,6 +1,6 @@
 <?xml version="1.0" ?> 
 <SpamassassinSettings>
-	<SpamassassinPath>C:\Program Files (x86)\SpamAssassin\spamc.exe</SpamassassinPath>
+	<SpamassassinPath>C:\Program Files\SpamAssassin\spamc.exe</SpamassassinPath>
 	<SpamassassinArgs></SpamassassinArgs>
 	<RejectThreshold>20</RejectThreshold>
 	<LogLevel>2</LogLevel>	
